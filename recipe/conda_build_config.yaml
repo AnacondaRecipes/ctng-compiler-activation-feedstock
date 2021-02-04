@@ -2,34 +2,44 @@
 ctng_gcc:
   - 7.5.0
   - 8.4.0
+  - 8.4.0
   - 9.3.0
 libgfortran_soname:
   - 4
   - 5
   - 5
+  - 5
 ctng_binutils:
   - 2.35
+  - 2.35
+  - 2.36
+  - 2.33
 ctng_gcc_activation_build_num:
   - 29
 ctng_target_platform:
   - linux-64
   - linux-ppc64le
   - linux-aarch64
+  - linux-s390x
 ctng_target_platform_u:
   - linux_64
   - linux_ppc64le
   - linux_aarch64
+  - linux_s390x
 ctng_cpu_arch:
   - x86_64
   - powerpc64le
   - aarch64
+  - s390x
 linux_machine:
   - x86_64
   - ppc64le
   - aarch64
+  - s390x
 conda_glibc_ver:
   - 2.12
   - 2.17
+  - 2.26
   - 2.17
 ctng_vendor:
   - conda
@@ -40,7 +50,7 @@ zip_keys:
     - ctng_cpu_arch
     - conda_glibc_ver
     - linux_machine
-  - - ctng_gcc
+    - ctng_gcc
     - libgfortran_soname
 
 FINAL_CPPFLAGS:
@@ -54,6 +64,8 @@ FINAL_CFLAGS_linux_ppc64le:
   - -mcpu=power8 -mtune=power8 -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O3 -pipe
 FINAL_CFLAGS_linux_aarch64:
   - -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O3 -pipe
+FINAL_CFLAGS_linux_s390x:
+  - -march=z14 -mtune=z14 -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O3 -pipe
 
 FINAL_CXXFLAGS_linux_64:
   - -fvisibility-inlines-hidden -std=c++17 -fmessage-length=0 -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe
@@ -63,6 +75,8 @@ FINAL_CXXFLAGS_linux_ppc64le:
   - -fvisibility-inlines-hidden -std=c++17 -fmessage-length=0 -mcpu=power8 -mtune=power8 -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O3 -pipe
 FINAL_CXXFLAGS_linux_aarch64:
   - -fvisibility-inlines-hidden -std=c++17 -fmessage-length=0 -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O3 -pipe
+FINAL_CXXFLAGS_linux_s390x:
+  - -fvisibility-inlines-hidden -std=c++17 -fmessage-length=0 -march=z14 -mtune=z14 -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O3 -pipe
 
 FINAL_FFLAGS_linux_64:
   - -fopenmp -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe
@@ -72,6 +86,8 @@ FINAL_FFLAGS_linux_ppc64le:
   - -fopenmp -mcpu=power8 -mtune=power8 -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O3 -pipe
 FINAL_FFLAGS_linux_aarch64:
   - -fopenmp -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O3 -pipe
+FINAL_FFLAGS_linux_s390x:
+  - -fopenmp -march=z14 -mtune=z14 -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O3 -pipe
 
 FINAL_LDFLAGS_linux_64:
   - -Wl,-O2 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now -Wl,--disable-new-dtags -Wl,--gc-sections
@@ -80,6 +96,8 @@ FINAL_LDFLAGS_linux_32:
 FINAL_LDFLAGS_linux_ppc64le:
   - -Wl,-O2 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now
 FINAL_LDFLAGS_linux_aarch64:
+  - -Wl,-O2 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now
+FINAL_LDFLAGS_linux_s390x:
   - -Wl,-O2 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now
 
 FINAL_DEBUG_CPPFLAGS:
@@ -93,6 +111,8 @@ FINAL_DEBUG_CFLAGS_linux_ppc64le:
   - -mcpu=power8 -mtune=power8 -ftree-vectorize -fPIC -fstack-protector-all -fno-plt -Og -g -Wall -Wextra -fvar-tracking-assignments -pipe
 FINAL_DEBUG_CFLAGS_linux_aarch64:
   - -ftree-vectorize -fPIC -fstack-protector-all -fno-plt -Og -g -Wall -Wextra -fvar-tracking-assignments -pipe
+FINAL_DEBUG_CFLAGS_linux_s390x:
+  - -march=z14 -mtune=z14 -ftree-vectorize -fPIC -fstack-protector-all -fno-plt -Og -g -Wall -Wextra -fvar-tracking-assignments -pipe
 
 FINAL_DEBUG_CXXFLAGS_linux_64:
   - -fvisibility-inlines-hidden -std=c++17 -fmessage-length=0 -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-all -fno-plt -Og -g -Wall -Wextra -fvar-tracking-assignments -ffunction-sections -pipe
@@ -102,6 +122,8 @@ FINAL_DEBUG_CXXFLAGS_linux_ppc64le:
   - -fvisibility-inlines-hidden -std=c++17 -fmessage-length=0 -mcpu=power8 -mtune=power8 -ftree-vectorize -fPIC -fstack-protector-all -fno-plt -Og -g -Wall -Wextra -fvar-tracking-assignments -pipe
 FINAL_DEBUG_CXXFLAGS_linux_aarch64:
   - -fvisibility-inlines-hidden -std=c++17 -fmessage-length=0 -ftree-vectorize -fPIC -fstack-protector-all -fno-plt -Og -g -Wall -Wextra -fvar-tracking-assignments -pipe
+FINAL_DEBUG_CXXFLAGS_linux_s390x:
+  - -fvisibility-inlines-hidden -std=c++17 -fmessage-length=0 -march=z14 -mtune=z14 -ftree-vectorize -fPIC -fstack-protector-all -fno-plt -Og -g -Wall -Wextra -fvar-tracking-assignments -pipe
 
 FINAL_DEBUG_FFLAGS_linux_64:
   - -fopenmp -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-all -fno-plt -Og -g -Wall -Wextra -fcheck=all -fbacktrace -fimplicit-none -fvar-tracking-assignments -ffunction-sections -pipe
@@ -111,12 +133,16 @@ FINAL_DEBUG_FFLAGS_linux_ppc64le:
   - -fopenmp -mcpu=power8 -mtune=power8 -ftree-vectorize -fPIC -fstack-protector-strong -pipe -Og -g -Wall -Wextra -fcheck=all -fbacktrace -fvar-tracking-assignments -pipe
 FINAL_DEBUG_FFLAGS_linux_aarch64:
   - -fopenmp -ftree-vectorize -fPIC -fstack-protector-strong -pipe -Og -g -Wall -Wextra -fcheck=all -fbacktrace -fvar-tracking-assignments -pipe
+FINAL_DEBUG_FFLAGS_linux_s390x:
+  - -fopenmp -march=z14 -mtune=z14 -ftree-vectorize -fPIC -fstack-protector-strong -pipe -Og -g -Wall -Wextra -fcheck=all -fbacktrace -fvar-tracking-assignments -pipe
 
 FINAL_CONDA_PYTHON_SYSCONFIGDATA_NAME_linux_64:
-  - _sysconfigdata_x86_64_conda_cos6_linux_gnu
+  - _sysconfigdata_x86_64_conda_cos7_linux_gnu
 FINAL_CONDA_PYTHON_SYSCONFIGDATA_NAME_linux_32:
   - _sysconfigdata_i686_conda_cos6_linux_gnu
 FINAL_CONDA_PYTHON_SYSCONFIGDATA_NAME_linux_ppc64le:
   - _sysconfigdata_powerpc64le_conda_cos7_linux_gnu
 FINAL_CONDA_PYTHON_SYSCONFIGDATA_NAME_linux_aarch64:
   - _sysconfigdata_aarch64_conda_cos7_linux_gnu
+FINAL_CONDA_PYTHON_SYSCONFIGDATA_NAME_linux_s390x:
+  - _sysconfigdata_s390x_conda_cos7_linux_gnu

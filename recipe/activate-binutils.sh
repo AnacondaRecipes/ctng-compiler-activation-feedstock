@@ -86,11 +86,15 @@ if [ "${CONDA_BUILD:-0}" = "1" ]; then
   env > /tmp/old-env-$$.txt
 fi
 
-# gold has not been (cannot be?) built for powerpc
+# gold has not been (cannot be?) built for powerpc and s390x
 if echo @CHOST@ | grep powerpc > /dev/null; then
   GOLD_USED=
 else
-  GOLD_USED=ld.gold
+  if echo @CHOST@ | grep s390x > /dev/null; then
+    GOLD_USED=
+  else
+    GOLD_USED=ld.gold
+  fi
 fi
 
 _tc_activation \

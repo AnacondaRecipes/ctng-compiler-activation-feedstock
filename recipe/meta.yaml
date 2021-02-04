@@ -1,3 +1,5 @@
+{% set bootstrapping = os.environ.get('CONDA_BUILD_BOOTSTRAPPING', 'no') %}
+
 package:
   name: ctng-compiler-activation
   version: {{ ctng_gcc }}
@@ -8,7 +10,12 @@ source:
 build:
   # defined in conda_build_config.yaml so that we can keep it associated with a particular GCC version number
   number: "{{ ctng_gcc_activation_build_num }}"
-  skip: True  # [not linux or ((aarch64 or ppc64le) and target_platform != ctng_target_platform)]
+  skip: True  # [not linux or ((aarch64 or ppc64le or s390x) and target_platform != ctng_target_platform)]
+{% if bootstrapping == 'yes' %}
+  string: h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}_bootstrapping
+{% else %}
+  string: h{{ PKG_HASH }}_{{ PKG_BUILDNUM + 1 }}
+{% endif %}
 
 requirements:
   build:
@@ -102,6 +109,7 @@ outputs:
         - libgfortran-ng
         # Because transitive run_exports do not work:
         - libgcc-ng >={{ ctng_gcc }}
+{% if bootstrapping != 'yes' %}
     test:
       requires:
         - cmake >=3.11
@@ -113,6 +121,7 @@ outputs:
         - sh test_fort.sh       # [target_platform == ctng_target_platform]
       files:
         - tests/fortomp/*
+{% endif %}
     about:
       summary: GNU Fortran Compiler (activation scripts)
       home: https://github.com/conda-forge/ctng-compiler-activation-feedstock
