@@ -47,6 +47,7 @@ ctng_vendor:
 zip_keys:
   - - ctng_target_platform
     - ctng_target_platform_u
+    - ctng_binutils
     - ctng_cpu_arch
     - conda_glibc_ver
     - linux_machine
