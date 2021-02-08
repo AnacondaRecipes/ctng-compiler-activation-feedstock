@@ -1,9 +1,9 @@
 # cos6-specific because of PYTHON_SYSCONFIGDATA_NAME below.  Would be nice to make that more generic if possible.
 ctng_gcc:
-  - 8.4.0
-  - 8.4.0
-  - 8.4.0
-  - 9.3.0
+  - 10.2.0
+  - 10.2.0
+  - 10.2.0
+  - 10.2.0
 libgfortran_soname:
   - 5
   - 5
@@ -13,7 +13,7 @@ ctng_binutils:
   - 2.36
   - 2.36
   - 2.36
-  - 2.33
+  - 2.36
 ctng_gcc_activation_build_num:
   - 30
 ctng_target_platform:
@@ -37,7 +37,8 @@ linux_machine:
   - aarch64
   - s390x
 conda_glibc_ver:
-  - 2.17
+  # TODO :: Set back to 2.17
+  - 2.26
   - 2.17
   - 2.26
   - 2.17
