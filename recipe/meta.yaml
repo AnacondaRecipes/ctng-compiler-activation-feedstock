@@ -1,5 +1,3 @@
-{% set bootstrapping = os.environ.get('CONDA_BUILD_BOOTSTRAPPING', 'no') %}
-
 package:
   name: ctng-compiler-activation
   version: {{ ctng_gcc }}
@@ -15,7 +13,7 @@ build:
   number: "{{ ctng_gcc_activation_build_num }}"
   string: h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}_bootstrapping
 {% else %}
-  number: "{{ ctng_gcc_activation_build_num + 1 }}"
+  number: "{{ (ctng_gcc_activation_build_num | int) + 1 }}"
   string: h{{ PKG_HASH }}_{{ (PKG_BUILDNUM | int) + 1 }}
 {% endif %}
 
