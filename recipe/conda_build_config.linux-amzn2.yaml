@@ -37,11 +37,12 @@ linux_machine:
   - aarch64
   - s390x
 conda_glibc_ver:
-  # TODO :: Set back to 2.17
+  # If you are using this file against something other than aarch64 you must be testing
+  # for that configuration or working on upgrading that arch beyond centos7, presumably
   - 2.26
-  - 2.17
   - 2.26
-  - 2.17
+  - 2.26
+  - 2.26
 ctng_vendor:
   - conda
 
