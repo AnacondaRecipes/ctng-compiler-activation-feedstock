@@ -1,4 +1,5 @@
 # cos6-specific because of PYTHON_SYSCONFIGDATA_NAME below.  Would be nice to make that more generic if possible.
+bootstrapping: no
 ctng_gcc:
   - 10.2.0
   - 10.2.0
