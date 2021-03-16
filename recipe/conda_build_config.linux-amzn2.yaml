@@ -2,47 +2,23 @@
 bootstrapping: no
 ctng_gcc:
   - 10.2.0
-  - 10.2.0
-  - 10.2.0
-  - 10.2.0
 libgfortran_soname:
   - 5
-  - 5
-  - 5
-  - 5
 ctng_binutils:
-  - 2.36.1
-  - 2.36.1
-  - 2.36.1
   - 2.36.1
 ctng_gcc_activation_build_num:
   - 31
 ctng_target_platform:
-  - linux-64
-  - linux-ppc64le
   - linux-aarch64
-  - linux-s390x
 ctng_target_platform_u:
-  - linux_64
-  - linux_ppc64le
   - linux_aarch64
-  - linux_s390x
 ctng_cpu_arch:
-  - x86_64
-  - powerpc64le
   - aarch64
-  - s390x
 linux_machine:
-  - x86_64
-  - ppc64le
   - aarch64
-  - s390x
 conda_glibc_ver:
   # If you are using this file against something other than aarch64 you must be testing
   # for that configuration or working on upgrading that arch beyond centos7, presumably
-  - 2.26
-  - 2.26
-  - 2.26
   - 2.26
 ctng_vendor:
   - conda
