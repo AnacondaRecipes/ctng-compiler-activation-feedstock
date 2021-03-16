@@ -66,7 +66,7 @@ FINAL_CFLAGS_linux_32:
 FINAL_CFLAGS_linux_ppc64le:
   - -mcpu=power8 -mtune=power8 -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O3 -pipe
 FINAL_CFLAGS_linux_aarch64:
-  - -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O3 -pipe
+  - -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O3 -pipe -mtune=neoverse-n1 -march=armv8.2-a+fp16+rcpc+dotprod+crypto
 FINAL_CFLAGS_linux_s390x:
   - -march=z14 -mtune=z14 -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O3 -pipe
 
@@ -77,7 +77,7 @@ FINAL_CXXFLAGS_linux_32:
 FINAL_CXXFLAGS_linux_ppc64le:
   - -fvisibility-inlines-hidden -std=c++17 -fmessage-length=0 -mcpu=power8 -mtune=power8 -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O3 -pipe
 FINAL_CXXFLAGS_linux_aarch64:
-  - -fvisibility-inlines-hidden -std=c++17 -fmessage-length=0 -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O3 -pipe
+  - -fvisibility-inlines-hidden -std=c++17 -fmessage-length=0 -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O3 -pipe -mtune=neoverse-n1 -march=armv8.2-a+fp16+rcpc+dotprod+crypto
 FINAL_CXXFLAGS_linux_s390x:
   - -fvisibility-inlines-hidden -std=c++17 -fmessage-length=0 -march=z14 -mtune=z14 -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O3 -pipe
 
@@ -88,7 +88,7 @@ FINAL_FFLAGS_linux_32:
 FINAL_FFLAGS_linux_ppc64le:
   - -fopenmp -mcpu=power8 -mtune=power8 -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O3 -pipe
 FINAL_FFLAGS_linux_aarch64:
-  - -fopenmp -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O3 -pipe
+  - -fopenmp -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O3 -pipe -mtune=neoverse-n1 -march=armv8.2-a+fp16+rcpc+dotprod+crypto
 FINAL_FFLAGS_linux_s390x:
   - -fopenmp -march=z14 -mtune=z14 -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O3 -pipe
 
@@ -113,7 +113,7 @@ FINAL_DEBUG_CFLAGS_linux_32:
 FINAL_DEBUG_CFLAGS_linux_ppc64le:
   - -mcpu=power8 -mtune=power8 -ftree-vectorize -fPIC -fstack-protector-all -fno-plt -Og -g -Wall -Wextra -fvar-tracking-assignments -pipe
 FINAL_DEBUG_CFLAGS_linux_aarch64:
-  - -ftree-vectorize -fPIC -fstack-protector-all -fno-plt -Og -g -Wall -Wextra -fvar-tracking-assignments -pipe
+  - -ftree-vectorize -fPIC -fstack-protector-all -fno-plt -Og -g -Wall -Wextra -fvar-tracking-assignments -pipe -mtune=neoverse-n1 -march=armv8.2-a+fp16+rcpc+dotprod+crypto
 FINAL_DEBUG_CFLAGS_linux_s390x:
   - -march=z14 -mtune=z14 -ftree-vectorize -fPIC -fstack-protector-all -fno-plt -Og -g -Wall -Wextra -fvar-tracking-assignments -pipe
 
@@ -124,7 +124,7 @@ FINAL_DEBUG_CXXFLAGS_linux_32:
 FINAL_DEBUG_CXXFLAGS_linux_ppc64le:
   - -fvisibility-inlines-hidden -std=c++17 -fmessage-length=0 -mcpu=power8 -mtune=power8 -ftree-vectorize -fPIC -fstack-protector-all -fno-plt -Og -g -Wall -Wextra -fvar-tracking-assignments -pipe
 FINAL_DEBUG_CXXFLAGS_linux_aarch64:
-  - -fvisibility-inlines-hidden -std=c++17 -fmessage-length=0 -ftree-vectorize -fPIC -fstack-protector-all -fno-plt -Og -g -Wall -Wextra -fvar-tracking-assignments -pipe
+  - -fvisibility-inlines-hidden -std=c++17 -fmessage-length=0 -ftree-vectorize -fPIC -fstack-protector-all -fno-plt -Og -g -Wall -Wextra -fvar-tracking-assignments -pipe -mtune=neoverse-n1 -march=armv8.2-a+fp16+rcpc+dotprod+crypto
 FINAL_DEBUG_CXXFLAGS_linux_s390x:
   - -fvisibility-inlines-hidden -std=c++17 -fmessage-length=0 -march=z14 -mtune=z14 -ftree-vectorize -fPIC -fstack-protector-all -fno-plt -Og -g -Wall -Wextra -fvar-tracking-assignments -pipe
 
@@ -135,7 +135,7 @@ FINAL_DEBUG_FFLAGS_linux_32:
 FINAL_DEBUG_FFLAGS_linux_ppc64le:
   - -fopenmp -mcpu=power8 -mtune=power8 -ftree-vectorize -fPIC -fstack-protector-strong -pipe -Og -g -Wall -Wextra -fcheck=all -fbacktrace -fvar-tracking-assignments -pipe
 FINAL_DEBUG_FFLAGS_linux_aarch64:
-  - -fopenmp -ftree-vectorize -fPIC -fstack-protector-strong -pipe -Og -g -Wall -Wextra -fcheck=all -fbacktrace -fvar-tracking-assignments -pipe
+  - -fopenmp -ftree-vectorize -fPIC -fstack-protector-strong -pipe -Og -g -Wall -Wextra -fcheck=all -fbacktrace -fvar-tracking-assignments -pipe -mtune=neoverse-n1 -march=armv8.2-a+fp16+rcpc+dotprod+crypto
 FINAL_DEBUG_FFLAGS_linux_s390x:
   - -fopenmp -march=z14 -mtune=z14 -ftree-vectorize -fPIC -fstack-protector-strong -pipe -Og -g -Wall -Wextra -fcheck=all -fbacktrace -fvar-tracking-assignments -pipe
 
