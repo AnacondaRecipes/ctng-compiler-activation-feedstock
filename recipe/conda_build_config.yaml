@@ -8,8 +8,9 @@ libgfortran_soname:
   - 5
   - 5
 ctng_binutils:
-  - 2.35  # [not s390x]
-  - 2.33  # [s390x]
+  - 2.35.1  # [not (s390x or aarch64)]
+  - 2.33.1  # [s390x]
+  - 2.29.1  # [aarch64]
 ctng_gcc_activation_build_num:
   - 29
 ctng_target_platform:
