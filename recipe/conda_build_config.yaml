@@ -12,7 +12,7 @@ ctng_binutils:
   - 2.33.1  # [s390x]
   - 2.29.1  # [aarch64]
 ctng_gcc_activation_build_num:
-  - 29
+  - 30
 ctng_target_platform:
   - linux-64
   - linux-ppc64le
