@@ -34,10 +34,16 @@ package:
   version: {{ gcc_version }}
 
 source:
-  path: .
+  - path: .
+
+  # Give it some dummy URL source to work around a bug in PBP related to caching sources.
+  - url: https://github.com/bazelbuild/bazel/releases/download/8.3.1/bazel-8.3.1-dist.zip
+    sha256: 79da863df05fa4de79a82c4f9d4e710766f040bc519fd8b184a4d4d51345d5ba
 
 build:
   number: {{ build_num }}
+  # Missing binutils and gcc on Windows.
+  skip: True  # [not linux]
   {% if (target_platform == "win-64" and cross_target_platform != "win-64") or (cross_target_platform == "win-64" and gcc_major|int < 13) or cross_target_platform == "linux-s390x" or s390x %}
   skip: true
   {% endif %}
