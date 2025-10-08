@@ -34,7 +34,7 @@ package:
   version: {{ gcc_version }}
 
 source:
-  - path: .
+  path: .
 
 build:
   number: {{ build_num }}
