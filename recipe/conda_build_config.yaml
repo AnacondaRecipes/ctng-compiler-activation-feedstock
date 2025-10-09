@@ -1,7 +1,8 @@
 gcc_version:
-  - 15.1.0                      # [ANACONDA_ROCKET_ENABLE_GCC15]
-  - 14.3.0                      # [not ANACONDA_ROCKET_ENABLE_GCC13 and not ANACONDA_ROCKET_ENABLE_GCC15]
-  - 13.4.0                      # [ANACONDA_ROCKET_ENABLE_GCC13]
+  - 15.2.0
+  - 14.3.0
+# We don't have gcc 13.4.0 built.
+#  - 13.4.0
 libgfortran_soname:
   - 5
 binutils_version:
