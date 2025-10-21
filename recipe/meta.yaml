@@ -293,8 +293,8 @@ outputs:
         - {{ library_prefix }}aarch64-conda-linux-gnu/
         - {{ library_prefix }}s390x-conda-linux-gnu/
         - {{ library_prefix }}x86_64-w64-mingw32/
-      overlinking_ignore_patterns:  # [linux and aarch64]
-        - "*"                       # [linux and aarch64]
+      overlinking_ignore_patterns:
+        - "*"
     requirements:
       host:
         - binutils_impl_{{ cross_target_platform }} {{ binutils_version }}.*
