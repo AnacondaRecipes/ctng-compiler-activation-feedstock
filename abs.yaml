@@ -1,6 +1,6 @@
 build_parameters:
   - "--no-error-overlinking"
-
 channels:
   - https://staging.continuum.io/pbp/fs/ctng-compilers-feedstock/pr2/80adb18
-  - https://staging.continuum.io/pbp/fs/ctng-compilers-feedstock/pr3/d0e90d5
+  # PBP feature -- should be pr3
+  - https://staging.continuum.io/pbp/fs/ctng-compilers-feedstock/pr0/d0e90d5
