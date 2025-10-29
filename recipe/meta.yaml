@@ -293,6 +293,8 @@ outputs:
         - {{ library_prefix }}aarch64-conda-linux-gnu/
         - {{ library_prefix }}s390x-conda-linux-gnu/
         - {{ library_prefix }}x86_64-w64-mingw32/
+      missing_dso_whitelist:  # [linux]
+        - /lib64/*            # [linux]
     requirements:
       host:
         - binutils_impl_{{ cross_target_platform }} {{ binutils_version }}.*
