@@ -1,4 +1,4 @@
-{% set build_num = 11 %}
+{% set build_num = 12 %}
 
 {% set gcc_major = 13 if gcc_version is undefined else gcc_version.split(".")[0] %}
 # generally, the runtime version of libstdcxx needs to be at least as high
@@ -295,6 +295,12 @@ outputs:
         - {{ library_prefix }}x86_64-w64-mingw32/
       missing_dso_whitelist:  # [linux]
         - /lib64/*            # [linux]
+      overlinking_ignore_patterns:  # [linux]
+        # This is specifically the 'not a valid tag' issue and the '*'
+        # is because there's no indication which file is an issue and
+        # this package is a repack of the artifacts built in
+        # ctng-compilers-feedstock.
+        - '*'                       # [linux]
     requirements:
       host:
         - binutils_impl_{{ cross_target_platform }} {{ binutils_version }}.*
