@@ -65,8 +65,8 @@ _tc_activation() {
           ;;
       esac
       if [ "${pass}" = "apply" ]; then
-        eval oldval="\$${from}$thing"
-        if [ -n "${oldval}" ]; then
+        eval oldval="\${${from}$thing:-}"
+        if [ -n "${oldval:-}" ]; then
           eval export "${to}'${thing}'=\"${oldval}\""
         else
           eval unset '${to}${thing}'
@@ -111,7 +111,7 @@ if [ "${CONDA_BUILD:-0}" = "1" ]; then
 fi
 
 _CONDA_PYTHON_SYSCONFIGDATA_NAME_USED=${_CONDA_PYTHON_SYSCONFIGDATA_NAME:-@_CONDA_PYTHON_SYSCONFIGDATA_NAME@}
-if [ -n "${_CONDA_PYTHON_SYSCONFIGDATA_NAME_USED}" ] && [ -n "${SYS_SYSROOT}" ]; then
+if [ -n "${_CONDA_PYTHON_SYSCONFIGDATA_NAME_USED}" ] && [ -n "${SYS_SYSROOT:-}" ]; then
   if find "$(dirname "$(dirname "${SYS_PYTHON}")")/lib/"python* -type f -name "${_CONDA_PYTHON_SYSCONFIGDATA_NAME_USED}.py" -exec false {} +; then
     echo ""
     echo "WARNING: The Python interpreter at the following prefix:"
