@@ -1,0 +1,14 @@
+anaconda_config_version: 1
+upstream_sources:
+  - webpage:
+      url: https://gcc.gnu.org/pub/gcc/releases/
+      regex: href="gcc-([\d.]+)/"
+    packages:
+      - gcc_linux-64
+      - gcc_linux-aarch64
+      - gxx_linux-64
+      - gxx_linux-aarch64
+      - gfortran_linux-64
+      - gfortran_linux-aarch64
+      - gfortran_bootstrap_linux-64
+      - gfortran_bootstrap_linux-aarch64
