@@ -10,5 +10,3 @@ upstream_sources:
       - gxx_linux-aarch64
       - gfortran_linux-64
       - gfortran_linux-aarch64
-      - gfortran_bootstrap_linux-64
-      - gfortran_bootstrap_linux-aarch64
