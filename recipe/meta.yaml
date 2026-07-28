@@ -29,6 +29,14 @@
 {% set library_prefix = "" %}
 {% endif %}
 
+{% if gcc_flavor == "main" or gcc_major|int <= 14 %}
+{% set name_prefix = "" %}
+{% set name_prefix_reverse = "manylinux-" %}
+{% else %}
+{% set name_prefix = "manylinux-" %}
+{% set name_prefix_reverse = "" %}
+{% endif %}
+
 package:
   name: ctng-compiler-activation
   version: {{ gcc_version }}
@@ -49,19 +57,19 @@ requirements:
     - shellcheck  # [not (aarch64 or ppc64le)]
 
 outputs:
-  - name: gcc_{{ cross_target_platform }}
+  - name: {{ name_prefix }}gcc_{{ cross_target_platform }}
     build:
       skip: true  # [not (linux or win)]
       run_exports:
         strong:
-          - libgcc >={{ min_runtime_version }}
+          - {{ name_prefix }}libgcc >={{ min_runtime_version }}
           # Need ucrt for windows<10
           - ucrt >=10.0.20348.0  # [cross_target_platform == "win-64"]
     script: install-gcc.sh
     requirements:
       run:
-        - gcc_impl_{{ target_platform }} {{ gcc_version }}.*
-        - gcc_impl_{{ cross_target_platform }} {{ gcc_version }}.*
+        - {{ name_prefix }}gcc_impl_{{ target_platform }} {{ gcc_version }}.*
+        - {{ name_prefix }}gcc_impl_{{ cross_target_platform }} {{ gcc_version }}.*
         # for activation of binutils env vars
         - binutils_{{ cross_target_platform }}
         - {{ c_stdlib }}_{{ target_platform }}   # [linux]
@@ -85,7 +93,7 @@ outputs:
       license: BSD-3-Clause
       license_file: LICENSE
 
-  - name: clang_impl_{{ cross_target_platform }}
+  - name: {{ name_prefix }}clang_impl_{{ cross_target_platform }}
     version: {{ clang_version }}
     script: install-clang_impl.sh
     build:
@@ -93,7 +101,7 @@ outputs:
       skip: true  # [win or s390x or cross_target_platform not in ("linux-64", "linux-aarch64", "linux-ppc64le")]
     requirements:
       run:
-        - libgcc-devel_{{ cross_target_platform }} {{ gcc_version }}.*
+        - {{ name_prefix }}libgcc-devel_{{ cross_target_platform }} {{ gcc_version }}.*
         - {{ cross_stdlib }}_{{ cross_target_platform }}
         - binutils_impl_{{ cross_target_platform }}
         - compiler-rt_{{ cross_target_platform }}
@@ -109,19 +117,19 @@ outputs:
       license: BSD-3-Clause
       license_file: LICENSE
 
-  - name: clang_{{ cross_target_platform }}
+  - name: {{ name_prefix }}clang_{{ cross_target_platform }}
     version: {{ clang_version }}
     script: install-clang.sh
     build:
       skip: true  # [win or s390x or cross_target_platform in ("linux-s390x", "win-64")]
       run_exports:
         strong:
-          - libgcc >={{ min_runtime_version }}
+          - {{ name_prefix }}libgcc >={{ min_runtime_version }}
     requirements:
       run:
         # for activation of binutils env vars
         - binutils_{{ cross_target_platform }}
-        - clang_impl_{{ cross_target_platform }} =={{ clang_version }}.*
+        - {{ name_prefix }}clang_impl_{{ cross_target_platform }} =={{ clang_version }}.*
     test:
       requires:
         - {{ cross_stdlib }}_{{ cross_target_platform }} {{ cross_stdlib_version }}
@@ -140,24 +148,24 @@ outputs:
       license: BSD-3-Clause
       license_file: LICENSE
 
-  - name: gxx_{{ cross_target_platform }}
+  - name: {{ name_prefix }}gxx_{{ cross_target_platform }}
     script: install-g++.sh
     build:
       skip: true  # [not (linux or win)]
       run_exports:
         strong:
           # This should be a transitive dependency, but conda-build doesn't support those
-          - libstdcxx >={{ min_runtime_version }}
+          - {{ name_prefix }}libstdcxx >={{ min_runtime_version }}
           # Because transitive run_exports do not work:
-          - libgcc >={{ min_runtime_version }}
+          - {{ name_prefix }}libgcc >={{ min_runtime_version }}
           # Need ucrt for windows<10
           - ucrt >=10.0.20348.0  # [cross_target_platform == "win-64"]
     requirements:
       run:
-        - gxx_impl_{{ target_platform }} {{ gcc_version }}.*
-        - gxx_impl_{{ cross_target_platform }} {{ gcc_version }}.*
+        - {{ name_prefix }}gxx_impl_{{ target_platform }} {{ gcc_version }}.*
+        - {{ name_prefix }}gxx_impl_{{ cross_target_platform }} {{ gcc_version }}.*
         # for activation of gcc env vars
-        - {{ pin_subpackage("gcc_" ~ cross_target_platform, exact=True) }}
+        - {{ pin_subpackage(name_prefix ~ "gcc_" ~ cross_target_platform, exact=True) }}
         # for activation of binutils env vars
         - binutils_{{ cross_target_platform }}
         - {{ cross_stdlib }}_{{ cross_target_platform }}
@@ -178,7 +186,7 @@ outputs:
       license: BSD-3-Clause
       license_file: LICENSE
 
-  - name: clangxx_impl_{{ cross_target_platform }}
+  - name: {{ name_prefix }}clangxx_impl_{{ cross_target_platform }}
     version: {{ clang_version }}
     script: install-clangxx_impl.sh
     build:
@@ -186,9 +194,9 @@ outputs:
       skip: true  # [win or s390x or cross_target_platform not in ("linux-64", "linux-aarch64", "linux-ppc64le")]
     requirements:
       run:
-        - {{ pin_subpackage("clang_impl_" ~ cross_target_platform, exact=True) }}
+        - {{ pin_subpackage(name_prefix ~ "clang_impl_" ~ cross_target_platform, exact=True) }}
         # C++ compiler on linux needs a stdlib
-        - libstdcxx-devel_{{ cross_target_platform }} =={{ gcc_version }}.*
+        - {{ name_prefix }}libstdcxx-devel_{{ cross_target_platform }} =={{ gcc_version }}.*
         - clangxx =={{ clang_version }}.*
     test:
       commands:
@@ -201,7 +209,7 @@ outputs:
       license: BSD-3-Clause
       license_file: LICENSE
 
-  - name: clangxx_{{ cross_target_platform }}
+  - name: {{ name_prefix }}clangxx_{{ cross_target_platform }}
     version: {{ clang_version }}
     script: install-clang++.sh
     build:
@@ -209,17 +217,17 @@ outputs:
       run_exports:
         strong:
           # This should be a transitive dependency, but conda-build doesn't support those
-          - libstdcxx >={{ min_runtime_version }}
+          - {{ name_prefix }}libstdcxx >={{ min_runtime_version }}
           # Because transitive run_exports do not work:
-          - libgcc >={{ min_runtime_version }}
+          - {{ name_prefix }}libgcc >={{ min_runtime_version }}
     requirements:
       run:
         # for activation of gcc env vars
-        - {{ pin_subpackage("clang_" ~ cross_target_platform, exact=True) }}
-        - clangxx_impl_{{ cross_target_platform }} =={{ clang_version }}.*
+        - {{ pin_subpackage(name_prefix ~ "clang_" ~ cross_target_platform, exact=True) }}
+        - {{ name_prefix }}clangxx_impl_{{ cross_target_platform }} =={{ clang_version }}.*
         # the dependency below is redundant, but we need to ensure different hashes
         # since the clang_{impl_,}_<target> outputs depend on a specific gcc version
-        - libstdcxx-devel_{{ cross_target_platform }} =={{ gcc_version }}.*
+        - {{ name_prefix }}libstdcxx-devel_{{ cross_target_platform }} =={{ gcc_version }}.*
     test:
       requires:
         - {{ cross_stdlib }}_{{ cross_target_platform }} {{ cross_stdlib_version }}
@@ -237,24 +245,24 @@ outputs:
       license: BSD-3-Clause
       license_file: LICENSE
 
-  - name: gfortran_{{ cross_target_platform }}
+  - name: {{ name_prefix }}gfortran_{{ cross_target_platform }}
     script: install-gfortran.sh
     build:
       skip: true  # [not (linux or win)]
       run_exports:
         strong:
-          - libgfortran{{ libgfortran_soname }} >={{ gcc_version }}
-          - libgfortran
+          - {{ name_prefix }}libgfortran{{ libgfortran_soname }} >={{ gcc_version }}
+          - {{ name_prefix }}libgfortran
           # Because transitive run_exports do not work:
-          - libgcc >={{ min_runtime_version }}
+          - {{ name_prefix }}libgcc >={{ min_runtime_version }}
           # Need ucrt for windows<10
           - ucrt >=10.0.20348.0  # [cross_target_platform == "win-64"]
     requirements:
       run:
-        - gfortran_impl_{{ cross_target_platform }} {{ gcc_version }}.*
-        - gfortran_impl_{{ target_platform }} {{ gcc_version }}.*
+        - {{ name_prefix }}gfortran_impl_{{ cross_target_platform }} {{ gcc_version }}.*
+        - {{ name_prefix }}gfortran_impl_{{ target_platform }} {{ gcc_version }}.*
         # for activation of gcc env vars:
-        - {{ pin_subpackage("gcc_" ~ cross_target_platform, exact=True) }}
+        - {{ pin_subpackage(name_prefix ~ "gcc_" ~ cross_target_platform, exact=True) }}
         # for activation of binutils env vars:
         - binutils_{{ cross_target_platform }}
         - {{ cross_stdlib }}_{{ cross_target_platform }}
@@ -275,7 +283,7 @@ outputs:
       license: BSD-3-Clause
       license_file: LICENSE
 
-  - name: gcc_bootstrap_{{ cross_target_platform }}
+  - name: {{ name_prefix }}gcc_bootstrap_{{ cross_target_platform }}
     version: "{{ gcc_version }}"
     build:
       skip: true  # [not (linux or win)]
@@ -304,13 +312,13 @@ outputs:
     requirements:
       host:
         - binutils_impl_{{ cross_target_platform }} {{ binutils_version }}.*
-        - gfortran_impl_{{ cross_target_platform }} {{ gcc_version }}.*
-        - gxx_impl_{{ cross_target_platform }} {{ gcc_version }}.*
-        - gcc_impl_{{ cross_target_platform }} {{ gcc_version }}.*
+        - {{ name_prefix }}gfortran_impl_{{ cross_target_platform }} {{ gcc_version }}.*
+        - {{ name_prefix }}gxx_impl_{{ cross_target_platform }} {{ gcc_version }}.*
+        - {{ name_prefix }}gcc_impl_{{ cross_target_platform }} {{ gcc_version }}.*
         - binutils_impl_{{ target_platform }} {{ binutils_version }}.*
-        - gfortran_impl_{{ target_platform }} {{ gcc_version }}.*
-        - gxx_impl_{{ target_platform }} {{ gcc_version }}.*
-        - gcc_impl_{{ target_platform }} {{ gcc_version }}.*
+        - {{ name_prefix }}gfortran_impl_{{ target_platform }} {{ gcc_version }}.*
+        - {{ name_prefix }}gxx_impl_{{ target_platform }} {{ gcc_version }}.*
+        - {{ name_prefix }}gcc_impl_{{ target_platform }} {{ gcc_version }}.*
     test:
       commands:
         - test -f $PREFIX/bin/{{ triplet }}-cc                 # [target_platform != "win-64"]
