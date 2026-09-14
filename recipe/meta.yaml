@@ -52,6 +52,7 @@ outputs:
   - name: gcc_{{ cross_target_platform }}
     build:
       skip: true  # [not (linux or win)]
+      string: {{ gcc_flavor }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}
       run_exports:
         strong:
           - libgcc >={{ min_runtime_version }}
@@ -91,6 +92,7 @@ outputs:
     build:
       # only for linux; osx builds are done on clang-compiler-activation-feedstock
       skip: true  # [win or s390x or cross_target_platform not in ("linux-64", "linux-aarch64", "linux-ppc64le")]
+      string: {{ clang_flavor }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}
     requirements:
       run:
         - libgcc-devel_{{ cross_target_platform }} {{ gcc_version }}.*
@@ -114,6 +116,7 @@ outputs:
     script: install-clang.sh
     build:
       skip: true  # [win or s390x or cross_target_platform in ("linux-s390x", "win-64")]
+      string: {{ clang_flavor }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}
       run_exports:
         strong:
           - libgcc >={{ min_runtime_version }}
@@ -144,6 +147,7 @@ outputs:
     script: install-g++.sh
     build:
       skip: true  # [not (linux or win)]
+      string: {{ gcc_flavor }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}
       run_exports:
         strong:
           # This should be a transitive dependency, but conda-build doesn't support those
@@ -184,6 +188,7 @@ outputs:
     build:
       # only for linux; osx builds are done on clang-compiler-activation-feedstock
       skip: true  # [win or s390x or cross_target_platform not in ("linux-64", "linux-aarch64", "linux-ppc64le")]
+      string: {{ clang_flavor }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}
     requirements:
       run:
         - {{ pin_subpackage("clang_impl_" ~ cross_target_platform, exact=True) }}
@@ -206,6 +211,7 @@ outputs:
     script: install-clang++.sh
     build:
       skip: true  # [win or s390x or cross_target_platform in ("linux-s390x", "win-64")]
+      string: {{ clang_flavor }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}
       run_exports:
         strong:
           # This should be a transitive dependency, but conda-build doesn't support those
@@ -241,6 +247,7 @@ outputs:
     script: install-gfortran.sh
     build:
       skip: true  # [not (linux or win)]
+      string: {{ gcc_flavor }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}
       run_exports:
         strong:
           - libgfortran{{ libgfortran_soname }} >={{ gcc_version }}
@@ -279,6 +286,7 @@ outputs:
     version: "{{ gcc_version }}"
     build:
       skip: true  # [not (linux or win)]
+      string: {{ gcc_flavor }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}
       binary_relocation: false
       detect_binary_files_with_prefix: false
       always_include_files:
