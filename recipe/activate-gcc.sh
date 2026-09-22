@@ -90,7 +90,17 @@ fi
 if [ "${CONDA_BUILD:-0}" = "1" ]; then
   CFLAGS_USED="@CFLAGS@ -isystem ${PREFIX}@LIBRARY_PREFIX@/include -fdebug-prefix-map=${SRC_DIR}=/usr/local/src/conda/${PKG_NAME}-${PKG_VERSION} -fdebug-prefix-map=${PREFIX}=/usr/local/src/conda-prefix"
   DEBUG_CFLAGS_USED="@DEBUG_CFLAGS@ -isystem ${PREFIX}@LIBRARY_PREFIX@/include -fdebug-prefix-map=${SRC_DIR}=/usr/local/src/conda/${PKG_NAME}-${PKG_VERSION} -fdebug-prefix-map=${PREFIX}=/usr/local/src/conda-prefix"
-  LDFLAGS_USED="@LDFLAGS@ -Wl,-rpath,${PREFIX}@LIBRARY_PREFIX@/lib -Wl,-rpath-link,${PREFIX}@LIBRARY_PREFIX@/lib -L${PREFIX}@LIBRARY_PREFIX@/lib"
+  if [[ "$gcc_flavor" == "manylinux" ]]; then
+    # NOTE: Search path differences.
+    # The manylinux toolchain has a different set of the "same" libraries for compile time as to those provided for runtime.
+    # The compile time linker needs to search the toolchain directories from the BUILD_PREFIX first as this is where the
+    # linker scripts and symbol restricted compile time libraries reside. At runtime the binaries are free to use the more
+    # "standard" libraries associated with the toolchain version, they are binary compatible with the compile time versions
+    # and with the "main" flavor toolchain.
+    LDFLAGS_USED="@LDFLAGS@ -Wl,-rpath,${PREFIX}@LIBRARY_PREFIX@/lib -Wl,-rpath-link,${BUILD_PREFIX}@LIBRARY_PREFIX@/lib/gcc/aarch64-conda-linux-gnu/15.2.1:${PREFIX}@LIBRARY_PREFIX@/lib -L${BUILD_PREFIX}@LIBRARY_PREFIX@/lib/gcc/aarch64-conda-linux-gnu/15.2.1 -L${PREFIX}@LIBRARY_PREFIX@/lib"
+  else
+    LDFLAGS_USED="@LDFLAGS@ -Wl,-rpath,${PREFIX}@LIBRARY_PREFIX@/lib -Wl,-rpath-link,${PREFIX}@LIBRARY_PREFIX@/lib -L${PREFIX}@LIBRARY_PREFIX@/lib"
+  fi
   CPPFLAGS_USED="@CPPFLAGS@ -isystem ${PREFIX}@LIBRARY_PREFIX@/include"
   DEBUG_CPPFLAGS_USED="@DEBUG_CPPFLAGS@ -isystem ${PREFIX}@LIBRARY_PREFIX@/include"
   CMAKE_PREFIX_PATH_USED="${PREFIX}:${CONDA_PREFIX}@LIBRARY_PREFIX@/@CHOST@/sysroot/usr"
@@ -99,7 +109,12 @@ else
   DEBUG_CFLAGS_USED="@DEBUG_CFLAGS@ -isystem ${CONDA_PREFIX}@LIBRARY_PREFIX@/include"
   CPPFLAGS_USED="@CPPFLAGS@ -isystem ${CONDA_PREFIX}@LIBRARY_PREFIX@/include"
   DEBUG_CPPFLAGS_USED="@DEBUG_CPPFLAGS@ -isystem ${CONDA_PREFIX}@LIBRARY_PREFIX@/include"
-  LDFLAGS_USED="@LDFLAGS@ -Wl,-rpath,${CONDA_PREFIX}@LIBRARY_PREFIX@/lib -Wl,-rpath-link,${CONDA_PREFIX}@LIBRARY_PREFIX@/lib -L${CONDA_PREFIX}@LIBRARY_PREFIX@/lib"
+  if [[ "$gcc_flavor" == "manylinux" ]]; then
+    # See note above RE: Search path differences.
+    LDFLAGS_USED="@LDFLAGS@ -Wl,-rpath,${CONDA_PREFIX}@LIBRARY_PREFIX@/lib -Wl,-rpath-link,${CONDA_PREFIX}@LIBRARY_PREFIX@/lib/gcc/aarch64-conda-linux-gnu/15.2.1:${CONDA_PREFIX}@LIBRARY_PREFIX@/lib -L${CONDA_PREFIX}@LIBRARY_PREFIX@/lib/gcc/aarch64-conda-linux-gnu/15.2.1 -L${CONDA_PREFIX}@LIBRARY_PREFIX@/lib"
+  else
+    LDFLAGS_USED="@LDFLAGS@ -Wl,-rpath,${CONDA_PREFIX}@LIBRARY_PREFIX@/lib -Wl,-rpath-link,${CONDA_PREFIX}@LIBRARY_PREFIX@/lib -L${CONDA_PREFIX}@LIBRARY_PREFIX@/lib"
+  fi
   CMAKE_PREFIX_PATH_USED="${CONDA_PREFIX}:${CONDA_PREFIX}@LIBRARY_PREFIX@/@CHOST@/sysroot/usr"
 fi
 
