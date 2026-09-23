@@ -100,6 +100,7 @@ find . -name "*activate*.*" -exec sed -i.bak "s|@FFLAGS@|${FINAL_FFLAGS}|g"     
 find . -name "*activate*.*" -exec sed -i.bak "s|@DEBUG_FFLAGS@|${FINAL_DEBUG_FFLAGS}|g"                                           "{}" \;
 find . -name "*activate*.*" -exec sed -i.bak "s|@LDFLAGS@|${FINAL_LDFLAGS}|g"                                                     "{}" \;
 find . -name "*activate*.*" -exec sed -i.bak "s|@LIBRARY_PREFIX@|${LIBRARY_PREFIX}|g"                                             "{}" \;
+find . -name "*activate*.*" -exec sed -i.bak "s|@gcc_flavor@|${gcc_flavor}|g"                                                     "{}" \;
 if [[ ! -z "${FINAL_CONDA_PYTHON_SYSCONFIGDATA_NAME}" ]]; then
   find . -name "*activate*.*" -exec sed -i.bak "s|@_CONDA_PYTHON_SYSCONFIGDATA_NAME@|${FINAL_CONDA_PYTHON_SYSCONFIGDATA_NAME}|g"    "{}" \;
 fi
