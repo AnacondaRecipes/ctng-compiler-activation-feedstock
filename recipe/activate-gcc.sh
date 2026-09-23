@@ -90,7 +90,7 @@ fi
 if [ "${CONDA_BUILD:-0}" = "1" ]; then
   CFLAGS_USED="@CFLAGS@ -isystem ${PREFIX}@LIBRARY_PREFIX@/include -fdebug-prefix-map=${SRC_DIR}=/usr/local/src/conda/${PKG_NAME}-${PKG_VERSION} -fdebug-prefix-map=${PREFIX}=/usr/local/src/conda-prefix"
   DEBUG_CFLAGS_USED="@DEBUG_CFLAGS@ -isystem ${PREFIX}@LIBRARY_PREFIX@/include -fdebug-prefix-map=${SRC_DIR}=/usr/local/src/conda/${PKG_NAME}-${PKG_VERSION} -fdebug-prefix-map=${PREFIX}=/usr/local/src/conda-prefix"
-  if [[ "@gcc_flavor@" = "manylinux" ]]; then
+  if [ "@gcc_flavor@" = "manylinux" ]; then
     # NOTE: Search path differences.
     # The manylinux toolchain has a different set of the "same" libraries for compile time as to those provided for runtime.
     # The compile time linker needs to search the toolchain directories from the BUILD_PREFIX first as this is where the
@@ -109,7 +109,7 @@ else
   DEBUG_CFLAGS_USED="@DEBUG_CFLAGS@ -isystem ${CONDA_PREFIX}@LIBRARY_PREFIX@/include"
   CPPFLAGS_USED="@CPPFLAGS@ -isystem ${CONDA_PREFIX}@LIBRARY_PREFIX@/include"
   DEBUG_CPPFLAGS_USED="@DEBUG_CPPFLAGS@ -isystem ${CONDA_PREFIX}@LIBRARY_PREFIX@/include"
-  if [[ "@gcc_flavor@" == "manylinux" ]]; then
+  if [ "@gcc_flavor@" = "manylinux" ]; then
     # See note above RE: Search path differences.
     LDFLAGS_USED="@LDFLAGS@ -Wl,-rpath,${CONDA_PREFIX}@LIBRARY_PREFIX@/lib -Wl,-rpath-link,${CONDA_PREFIX}@LIBRARY_PREFIX@/lib/gcc/aarch64-conda-linux-gnu/15.2.1:${CONDA_PREFIX}@LIBRARY_PREFIX@/lib -L${CONDA_PREFIX}@LIBRARY_PREFIX@/lib/gcc/aarch64-conda-linux-gnu/15.2.1 -L${CONDA_PREFIX}@LIBRARY_PREFIX@/lib"
   else
