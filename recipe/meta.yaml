@@ -68,6 +68,7 @@ outputs:
         - {{ c_stdlib }}_{{ target_platform }}   # [linux]
         - {{ cross_stdlib }}_{{ cross_target_platform }}
         - gendef   # [cross_target_platform == "win-64"]
+        - _gcc_mutex 1 {{ gcc_flavor }}_*
     test:
       requires:
         - {{ cross_stdlib }}_{{ cross_target_platform }} {{ cross_stdlib_version }}
@@ -101,6 +102,9 @@ outputs:
         - compiler-rt_{{ cross_target_platform }}
         - compiler-rt =={{ clang_version }}.*
         - clang =={{ clang_version }}.*
+        # Note that for now we are only producing a main variant for clang_impl.
+        # We don't have a need for a manylinux variant.
+        - _gcc_mutex 1 main_*
     test:
       commands:
         - {{ triplet }}-clang --version
@@ -125,6 +129,7 @@ outputs:
         # for activation of binutils env vars
         - binutils_{{ cross_target_platform }}
         - clang_impl_{{ cross_target_platform }} =={{ clang_version }}.*
+        - _gcc_mutex 1 {{ gcc_flavor }}_*
     test:
       requires:
         - {{ cross_stdlib }}_{{ cross_target_platform }} {{ cross_stdlib_version }}
@@ -165,6 +170,7 @@ outputs:
         # for activation of binutils env vars
         - binutils_{{ cross_target_platform }}
         - {{ cross_stdlib }}_{{ cross_target_platform }}
+        - _gcc_mutex 1 {{ gcc_flavor }}_*
     test:
       requires:
         - {{ cross_stdlib }}_{{ cross_target_platform }} {{ cross_stdlib_version }}
@@ -195,6 +201,9 @@ outputs:
         # C++ compiler on linux needs a stdlib
         - libstdcxx-devel_{{ cross_target_platform }} =={{ gcc_version }}.*
         - clangxx =={{ clang_version }}.*
+        # Note that for now we are only producing a main variant for clang_impl.
+        # We don't have a need for a manylinux variant.
+        - _gcc_mutex 1 main_*
     test:
       commands:
         - x86_64-conda-linux-gnu-clang++ --version          # [linux64]
@@ -226,6 +235,7 @@ outputs:
         # the dependency below is redundant, but we need to ensure different hashes
         # since the clang_{impl_,}_<target> outputs depend on a specific gcc version
         - libstdcxx-devel_{{ cross_target_platform }} =={{ gcc_version }}.*
+        - _gcc_mutex 1 {{ gcc_flavor }}_*
     test:
       requires:
         - {{ cross_stdlib }}_{{ cross_target_platform }} {{ cross_stdlib_version }}
@@ -265,6 +275,7 @@ outputs:
         # for activation of binutils env vars:
         - binutils_{{ cross_target_platform }}
         - {{ cross_stdlib }}_{{ cross_target_platform }}
+        - _gcc_mutex 1 {{ gcc_flavor }}_*
     test:
       requires:
         - cmake >=3.11  # [x86_64 or aarch64 or ppc64le]
@@ -319,6 +330,7 @@ outputs:
         - gfortran_impl_{{ target_platform }} {{ gcc_version }}.*
         - gxx_impl_{{ target_platform }} {{ gcc_version }}.*
         - gcc_impl_{{ target_platform }} {{ gcc_version }}.*
+        - _gcc_mutex 1 {{ gcc_flavor }}_*
     test:
       commands:
         - test -f $PREFIX/bin/{{ triplet }}-cc                 # [target_platform != "win-64"]
