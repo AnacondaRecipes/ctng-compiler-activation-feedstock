@@ -56,13 +56,13 @@ FINAL_CPPFLAGS:
   - -DNDEBUG -D_FORTIFY_SOURCE=2 -O2
 
 FINAL_CFLAGS_linux_64:
-  - -march=x86-64-v2 -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe
+  - -march=x86-64-v2 -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -std=gnu17
 FINAL_CFLAGS_linux_ppc64le:
-  - -mcpu=power8 -mtune=power8 -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -pipe
+  - -mcpu=power8 -mtune=power8 -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -pipe -std=gnu17
 FINAL_CFLAGS_linux_aarch64:
-  - -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -pipe
+  - -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -pipe -std=gnu17
 FINAL_CFLAGS_linux_s390x:
-  - -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -pipe
+  - -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -pipe -std=gnu17
 FINAL_CFLAGS_win_64:
   - -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -pipe
 
@@ -103,13 +103,13 @@ FINAL_DEBUG_CPPFLAGS:
   - -D_DEBUG -D_FORTIFY_SOURCE=2 -Og
 
 FINAL_DEBUG_CFLAGS_linux_64:
-  - -march=x86-64-v2 -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-all -fno-plt -Og -g -Wall -Wextra -fvar-tracking-assignments -ffunction-sections -pipe
+  - -march=x86-64-v2 -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-all -fno-plt -Og -g -Wall -Wextra -fvar-tracking-assignments -ffunction-sections -pipe -std=gnu17
 FINAL_DEBUG_CFLAGS_linux_ppc64le:
-  - -mcpu=power8 -mtune=power8 -ftree-vectorize -fPIC -fstack-protector-all -fno-plt -Og -g -Wall -Wextra -fvar-tracking-assignments -pipe
+  - -mcpu=power8 -mtune=power8 -ftree-vectorize -fPIC -fstack-protector-all -fno-plt -Og -g -Wall -Wextra -fvar-tracking-assignments -pipe -std=gnu17
 FINAL_DEBUG_CFLAGS_linux_aarch64:
-  - -ftree-vectorize -fPIC -fstack-protector-all -fno-plt -Og -g -Wall -Wextra -fvar-tracking-assignments -pipe
+  - -ftree-vectorize -fPIC -fstack-protector-all -fno-plt -Og -g -Wall -Wextra -fvar-tracking-assignments -pipe -std=gnu17
 FINAL_DEBUG_CFLAGS_linux_s390x:
-  - -ftree-vectorize -fPIC -fstack-protector-all -fno-plt -Og -g -Wall -Wextra -fvar-tracking-assignments -pipe
+  - -ftree-vectorize -fPIC -fstack-protector-all -fno-plt -Og -g -Wall -Wextra -fvar-tracking-assignments -pipe -std=gnu17
 FINAL_DEBUG_CFLAGS_win_64:
   - -ftree-vectorize -fPIC -fstack-protector-all -fno-plt -Og -g -Wall -Wextra -fvar-tracking-assignments -pipe
 
