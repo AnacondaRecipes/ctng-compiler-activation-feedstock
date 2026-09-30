@@ -97,7 +97,7 @@ if [ "${CONDA_BUILD:-0}" = "1" ]; then
     # linker scripts and symbol restricted compile time libraries reside. At runtime the binaries are free to use the more
     # "standard" libraries associated with the toolchain version, they are binary compatible with the compile time versions
     # and with the "main" flavor toolchain.
-    LDFLAGS_USED="@LDFLAGS@ -Wl,-rpath,${PREFIX}@LIBRARY_PREFIX@/lib -Wl,-rpath-link,${BUILD_PREFIX}@LIBRARY_PREFIX@/lib/gcc/aarch64-conda-linux-gnu/15.2.1:${PREFIX}@LIBRARY_PREFIX@/lib -L${BUILD_PREFIX}@LIBRARY_PREFIX@/lib/gcc/aarch64-conda-linux-gnu/15.2.1 -L${PREFIX}@LIBRARY_PREFIX@/lib"
+    LDFLAGS_USED="@LDFLAGS@ -Wl,-rpath,${PREFIX}@LIBRARY_PREFIX@/lib -Wl,-rpath-link,${BUILD_PREFIX}@LIBRARY_PREFIX@/lib/gcc/@CPU_ARCH@-conda-linux-gnu/15.2.1:${PREFIX}@LIBRARY_PREFIX@/lib -L${BUILD_PREFIX}@LIBRARY_PREFIX@/lib/gcc/@CPU_ARCH@-conda-linux-gnu/15.2.1 -L${PREFIX}@LIBRARY_PREFIX@/lib"
   else
     LDFLAGS_USED="@LDFLAGS@ -Wl,-rpath,${PREFIX}@LIBRARY_PREFIX@/lib -Wl,-rpath-link,${PREFIX}@LIBRARY_PREFIX@/lib -L${PREFIX}@LIBRARY_PREFIX@/lib"
   fi
@@ -111,7 +111,7 @@ else
   DEBUG_CPPFLAGS_USED="@DEBUG_CPPFLAGS@ -isystem ${CONDA_PREFIX}@LIBRARY_PREFIX@/include"
   if [ "@gcc_flavor@" = "manylinux" ]; then
     # See note above RE: Search path differences.
-    LDFLAGS_USED="@LDFLAGS@ -Wl,-rpath,${CONDA_PREFIX}@LIBRARY_PREFIX@/lib -Wl,-rpath-link,${CONDA_PREFIX}@LIBRARY_PREFIX@/lib/gcc/aarch64-conda-linux-gnu/15.2.1:${CONDA_PREFIX}@LIBRARY_PREFIX@/lib -L${CONDA_PREFIX}@LIBRARY_PREFIX@/lib/gcc/aarch64-conda-linux-gnu/15.2.1 -L${CONDA_PREFIX}@LIBRARY_PREFIX@/lib"
+    LDFLAGS_USED="@LDFLAGS@ -Wl,-rpath,${CONDA_PREFIX}@LIBRARY_PREFIX@/lib -Wl,-rpath-link,${CONDA_PREFIX}@LIBRARY_PREFIX@/lib/gcc/@CPU_ARCH@-conda-linux-gnu/15.2.1:${CONDA_PREFIX}@LIBRARY_PREFIX@/lib -L${CONDA_PREFIX}@LIBRARY_PREFIX@/lib/gcc/@CPU_ARCH@-conda-linux-gnu/15.2.1 -L${CONDA_PREFIX}@LIBRARY_PREFIX@/lib"
   else
     LDFLAGS_USED="@LDFLAGS@ -Wl,-rpath,${CONDA_PREFIX}@LIBRARY_PREFIX@/lib -Wl,-rpath-link,${CONDA_PREFIX}@LIBRARY_PREFIX@/lib -L${CONDA_PREFIX}@LIBRARY_PREFIX@/lib"
   fi

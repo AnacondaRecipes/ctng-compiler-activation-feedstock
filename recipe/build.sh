@@ -82,6 +82,7 @@ if [[ "$cross_target_platform" == linux-ppc64le ]]; then
   MESON_FAMILY="ppc64"
 fi
 
+CPU_ARCH=${MACHINE}
 
 find . -name "*activate*.*" -exec sed -i.bak "s|@IS_WIN@|${IS_WIN}|g"                                                              "{}" \;
 find . -name "*activate*.*" -exec sed -i.bak "s|@TOOLS@|${TOOLS}|g"                                                                "{}" \;
@@ -101,6 +102,7 @@ find . -name "*activate*.*" -exec sed -i.bak "s|@DEBUG_FFLAGS@|${FINAL_DEBUG_FFL
 find . -name "*activate*.*" -exec sed -i.bak "s|@LDFLAGS@|${FINAL_LDFLAGS}|g"                                                     "{}" \;
 find . -name "*activate*.*" -exec sed -i.bak "s|@LIBRARY_PREFIX@|${LIBRARY_PREFIX}|g"                                             "{}" \;
 find . -name "*activate*.*" -exec sed -i.bak "s|@gcc_flavor@|${gcc_flavor}|g"                                                     "{}" \;
+find . -name "*activate*.*" -exec sed -i.bak "s|@CPU_ARCH@|${CPU_ARCH}|g"                                                         "{}" \;
 if [[ ! -z "${FINAL_CONDA_PYTHON_SYSCONFIGDATA_NAME}" ]]; then
   find . -name "*activate*.*" -exec sed -i.bak "s|@_CONDA_PYTHON_SYSCONFIGDATA_NAME@|${FINAL_CONDA_PYTHON_SYSCONFIGDATA_NAME}|g"    "{}" \;
 fi
