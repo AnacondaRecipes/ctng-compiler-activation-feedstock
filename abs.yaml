@@ -1,9 +1,7 @@
 build_parameters:
   - "--no-error-overlinking"
 
-# PR CI only - clang/clangxx 23.1.4 from AnacondaRecipes/clangdev-feedstock#35 (graph of head 524eba9) and
-# compiler-rt 23.1.4 from AnacondaRecipes/compiler-rt-feedstock#16 (graph of head 47512fe);
-# REMOVE before merge (clang_impl/clangxx_impl 23.1 run on them, not on pkgs/main yet)
+# PR CI only - compiler-rt 23.1.4 from AnacondaRecipes/compiler-rt-feedstock#16 (graph of head 47512fe);
+# REMOVE before merge (clang_impl 23.1 runs on it, not on pkgs/main yet)
 channels:
-  - https://package-build.internal.anaconda.com/pkg-orchestrator/v1/channels/graphs/a4ee9bca-cce0-4a13-9233-d4b02fa4cd69
   - https://package-build.internal.anaconda.com/pkg-orchestrator/v1/channels/graphs/f2625317-1f59-4a30-bc11-94647d64853e
