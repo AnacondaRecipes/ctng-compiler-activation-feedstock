@@ -10,3 +10,20 @@ upstream_sources:
       - gxx_linux-aarch64
       - gfortran_linux-64
       - gfortran_linux-aarch64
+      - gcc_bootstrap_linux-64
+      - gcc_bootstrap_linux-aarch64
+  - github:
+      identifier: llvm/llvm-project
+      use_max_tag: true
+      include_regex: ^llvmorg-\d+\.\d+\.\d+$
+      from_pattern: ^llvmorg-(\d+\.\d+)\.\d+$
+      to_pattern: \1
+    packages:
+      - clang_impl_linux-64
+      - clang_impl_linux-aarch64
+      - clang_linux-64
+      - clang_linux-aarch64
+      - clangxx_impl_linux-64
+      - clangxx_impl_linux-aarch64
+      - clangxx_linux-64
+      - clangxx_linux-aarch64

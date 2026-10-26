@@ -1,4 +1,4 @@
-{% set build_num = 15 %}
+{% set build_num = 16 %}
 
 {% set gcc_major = 13 if gcc_version is undefined else gcc_version.split(".")[0] %}
 # generally, the runtime version of libstdcxx needs to be at least as high
@@ -83,7 +83,11 @@ outputs:
       summary: GNU C Compiler (activation scripts)
       home: https://github.com/conda-forge/ctng-compiler-activation-feedstock
       license: BSD-3-Clause
+      license_family: BSD
       license_file: LICENSE
+      description: Activation scripts that set CC, CFLAGS and related variables for the GNU C compiler (gcc_impl) targeting {{ cross_target_platform }}.
+      doc_url: https://docs.conda.io/projects/conda-build/en/latest/resources/compiler-tools.html
+      dev_url: https://github.com/AnacondaRecipes/ctng-compiler-activation-feedstock
 
   - name: clang_impl_{{ cross_target_platform }}
     version: {{ clang_version }}
@@ -107,7 +111,11 @@ outputs:
       summary: Clang Compiler (activation scripts)
       home: https://github.com/conda-forge/ctng-compiler-activation-feedstock
       license: BSD-3-Clause
+      license_family: BSD
       license_file: LICENSE
+      description: Triplet-prefixed clang symlinks for {{ cross_target_platform }}, with the GCC runtime, binutils, sysroot and compiler-rt that clang {{ clang_version }} uses.
+      doc_url: https://docs.conda.io/projects/conda-build/en/latest/resources/compiler-tools.html
+      dev_url: https://github.com/AnacondaRecipes/ctng-compiler-activation-feedstock
 
   - name: clang_{{ cross_target_platform }}
     version: {{ clang_version }}
@@ -122,6 +130,8 @@ outputs:
         # for activation of binutils env vars
         - binutils_{{ cross_target_platform }}
         - clang_impl_{{ cross_target_platform }} =={{ clang_version }}.*
+        # need to ensure libgcc-devel_<target> matching the run-exports is used
+        - libgcc-devel_{{ cross_target_platform }} {{ gcc_version }}.*
     test:
       requires:
         - {{ cross_stdlib }}_{{ cross_target_platform }} {{ cross_stdlib_version }}
@@ -138,7 +148,11 @@ outputs:
       summary: Clang Compiler (activation scripts)
       home: https://github.com/conda-forge/ctng-compiler-activation-feedstock
       license: BSD-3-Clause
+      license_family: BSD
       license_file: LICENSE
+      description: Activation scripts that set CC, CFLAGS and related variables for clang {{ clang_version }} targeting {{ cross_target_platform }}.
+      doc_url: https://docs.conda.io/projects/conda-build/en/latest/resources/compiler-tools.html
+      dev_url: https://github.com/AnacondaRecipes/ctng-compiler-activation-feedstock
 
   - name: gxx_{{ cross_target_platform }}
     script: install-g++.sh
@@ -176,7 +190,11 @@ outputs:
       summary: GNU C++ Compiler (activation scripts)
       home: https://github.com/conda-forge/ctng-compiler-activation-feedstock
       license: BSD-3-Clause
+      license_family: BSD
       license_file: LICENSE
+      description: Activation scripts that set CXX, CXXFLAGS and related variables for the GNU C++ compiler (gxx_impl) targeting {{ cross_target_platform }}.
+      doc_url: https://docs.conda.io/projects/conda-build/en/latest/resources/compiler-tools.html
+      dev_url: https://github.com/AnacondaRecipes/ctng-compiler-activation-feedstock
 
   - name: clangxx_impl_{{ cross_target_platform }}
     version: {{ clang_version }}
@@ -199,7 +217,11 @@ outputs:
       summary: Clang C++ Compiler (activation scripts)
       home: https://github.com/conda-forge/ctng-compiler-activation-feedstock
       license: BSD-3-Clause
+      license_family: BSD
       license_file: LICENSE
+      description: Triplet-prefixed clang++ symlinks for {{ cross_target_platform }}, with the libstdc++ headers and libraries that clang++ {{ clang_version }} uses.
+      doc_url: https://docs.conda.io/projects/conda-build/en/latest/resources/compiler-tools.html
+      dev_url: https://github.com/AnacondaRecipes/ctng-compiler-activation-feedstock
 
   - name: clangxx_{{ cross_target_platform }}
     version: {{ clang_version }}
@@ -235,7 +257,11 @@ outputs:
       summary: Clang C++ Compiler (activation scripts)
       home: https://github.com/conda-forge/ctng-compiler-activation-feedstock
       license: BSD-3-Clause
+      license_family: BSD
       license_file: LICENSE
+      description: Activation scripts that set CXX, CXXFLAGS and related variables for clang++ {{ clang_version }} targeting {{ cross_target_platform }}.
+      doc_url: https://docs.conda.io/projects/conda-build/en/latest/resources/compiler-tools.html
+      dev_url: https://github.com/AnacondaRecipes/ctng-compiler-activation-feedstock
 
   - name: gfortran_{{ cross_target_platform }}
     script: install-gfortran.sh
@@ -273,7 +299,11 @@ outputs:
       summary: GNU Fortran Compiler (activation scripts)
       home: https://github.com/conda-forge/ctng-compiler-activation-feedstock
       license: BSD-3-Clause
+      license_family: BSD
       license_file: LICENSE
+      description: Activation scripts that set FC, FFLAGS and related variables for the GNU Fortran compiler (gfortran_impl) targeting {{ cross_target_platform }}.
+      doc_url: https://docs.conda.io/projects/conda-build/en/latest/resources/compiler-tools.html
+      dev_url: https://github.com/AnacondaRecipes/ctng-compiler-activation-feedstock
 
   - name: gcc_bootstrap_{{ cross_target_platform }}
     version: "{{ gcc_version }}"
@@ -318,14 +348,24 @@ outputs:
     about:
       summary: GCC bootstrap compilers for building deps
       home: https://github.com/conda-forge/ctng-compiler-activation-feedstock
-      license: GPL
+      # combination of the repacked gcc_impl/gxx_impl/gfortran_impl and binutils_impl licenses;
+      # -or-later as granted by the gcc and binutils sources (they are labelled -only)
+      license: GPL-3.0-or-later WITH GCC-exception-3.1 AND GPL-3.0-or-later
+      license_family: GPL3
       license_file: GPL_LICENSE
+      description: Self-contained GCC {{ gcc_version }} toolchain (C, C++ and Fortran compilers, binutils and a glibc sysroot) used to build the toolchain's own dependencies.
+      doc_url: https://gcc.gnu.org/onlinedocs/
+      dev_url: https://gcc.gnu.org/git.html
 
 about:
   summary: Activation scripts for gcc, g++, gfortran and clang
   home: https://github.com/conda-forge/ctng-compiler-activation-feedstock
   license: BSD-3-Clause
+  license_family: BSD
   license_file: LICENSE
+  description: Activation scripts for the conda GCC (gcc, g++, gfortran) and clang compilers on Linux.
+  doc_url: https://docs.conda.io/projects/conda-build/en/latest/resources/compiler-tools.html
+  dev_url: https://github.com/AnacondaRecipes/ctng-compiler-activation-feedstock
 
 extra:
   recipe-maintainers:
