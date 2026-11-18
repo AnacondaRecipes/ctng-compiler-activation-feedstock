@@ -1,8 +1,8 @@
 gcc_version:
-  - 15.2.1
-  - 15.2.0
-  - 14.3.0
-  - 14.3.0
+  - 15.2.1  # [ANACONDA_ROCKET_ENABLE_MANYLINUX]
+  - 15.2.0  # [not ANACONDA_ROCKET_ENABLE_MANYLINUX]
+  - 14.3.0  # [not ANACONDA_ROCKET_ENABLE_MANYLINUX]
+  - 14.3.0  # [not ANACONDA_ROCKET_ENABLE_MANYLINUX]
 # We don't have gcc 13.4.0 built.
 #  - 13.4.0
 libgfortran_soname:
@@ -29,22 +29,22 @@ cross_stdlib_version:
   - 12    # [win]
 
 clang_version:
-  - 22.1
-  - 21.1
-  - 20.1
-  - 19.1
+  - 22.1  # [ANACONDA_ROCKET_ENABLE_MANYLINUX]
+  - 21.1  # [not ANACONDA_ROCKET_ENABLE_MANYLINUX]
+  - 20.1  # [not ANACONDA_ROCKET_ENABLE_MANYLINUX]
+  - 19.1  # [not ANACONDA_ROCKET_ENABLE_MANYLINUX]
 
 gcc_flavor:
-  - manylinux
-  - main
-  - main
-  - main
+  - manylinux  # [ANACONDA_ROCKET_ENABLE_MANYLINUX]
+  - main       # [not ANACONDA_ROCKET_ENABLE_MANYLINUX]
+  - main       # [not ANACONDA_ROCKET_ENABLE_MANYLINUX]
+  - main       # [not ANACONDA_ROCKET_ENABLE_MANYLINUX]
 
 clang_flavor:
-  - main
-  - main
-  - main
-  - main
+  - manylinux  # [ANACONDA_ROCKET_ENABLE_MANYLINUX]
+  - main       # [not ANACONDA_ROCKET_ENABLE_MANYLINUX]
+  - main       # [not ANACONDA_ROCKET_ENABLE_MANYLINUX]
+  - main       # [not ANACONDA_ROCKET_ENABLE_MANYLINUX]
 
 zip_keys:
 - - gcc_flavor

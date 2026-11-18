@@ -93,7 +93,7 @@ outputs:
     script: install-clang_impl.sh
     build:
       # only for linux; osx builds are done on clang-compiler-activation-feedstock
-      skip: true  # [win or s390x or cross_target_platform not in ("linux-64", "linux-aarch64", "linux-ppc64le")]
+      skip: true  # [win or s390x or cross_target_platform not in ("linux-64", "linux-aarch64", "linux-ppc64le") or clang_flavor == "manylinux"]
       string: {{ clang_flavor }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}
       run_exports:
         strong:
@@ -123,7 +123,7 @@ outputs:
     version: {{ clang_version }}
     script: install-clang.sh
     build:
-      skip: true  # [win or s390x or cross_target_platform in ("linux-s390x", "win-64")]
+      skip: true  # [win or s390x or cross_target_platform in ("linux-s390x", "win-64") or clang_flavor == "manylinux"]
       string: {{ clang_flavor }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}
       run_exports:
         strong:
@@ -199,7 +199,7 @@ outputs:
     script: install-clangxx_impl.sh
     build:
       # only for linux; osx builds are done on clang-compiler-activation-feedstock
-      skip: true  # [win or s390x or cross_target_platform not in ("linux-64", "linux-aarch64", "linux-ppc64le")]
+      skip: true  # [win or s390x or cross_target_platform not in ("linux-64", "linux-aarch64", "linux-ppc64le") or clang_flavor == "manylinux"]
       string: {{ clang_flavor }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}
       run_exports:
         strong:
@@ -228,7 +228,7 @@ outputs:
     version: {{ clang_version }}
     script: install-clang++.sh
     build:
-      skip: true  # [win or s390x or cross_target_platform in ("linux-s390x", "win-64")]
+      skip: true  # [win or s390x or cross_target_platform in ("linux-s390x", "win-64") or clang_flavor == "manylinux"]
       string: {{ clang_flavor }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}
       run_exports:
         strong:
